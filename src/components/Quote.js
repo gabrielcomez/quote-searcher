@@ -1,29 +1,14 @@
 import React, { Component } from "react";
 
 export default class Quote extends Component {
-  state = {
-    likeStatus: "unclicked"
-  };
-
-  handleLike = () => {
-    this.setState({
-      likeStatus: "liked"
-    });
-  };
-  handleDislike = () => {
-    this.setState({
-      likeStatus: "disliked"
-    });
-  };
-
   render() {
-    const { likeStatus } = this.state;
-    console.log(likeStatus);
+    const { likeStatus } = this.props;
+    // console.log(this.props.likeStatus);
     let quoteStyle = { color: "black" };
     if (likeStatus === "liked") {
-      quoteStyle = { color: "green" };
+      quoteStyle = { color: "green", fontWeight: "bold" };
     } else if (likeStatus === "disliked") {
-      quoteStyle = { color: "red" };
+      quoteStyle = { color: "red", fontWeight: "bold" };
     }
     // console.log(quoteStyle);
 
@@ -34,8 +19,8 @@ export default class Quote extends Component {
           <p>By: {this.props.author}</p>
         </div>
         <div>
-          <button onClick={this.handleLike}>:)</button>
-          <button onClick={this.handleDislike}>:(</button>
+          <button onClick={this.props.handleLike}>:)</button>
+          <button onClick={this.props.handleDislike}>:(</button>
         </div>
       </main>
     );

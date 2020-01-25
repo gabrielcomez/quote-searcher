@@ -4,7 +4,8 @@ import Quote from "./Quote";
 export default class QuoteSearcher extends Component {
   state = {
     quotes: [],
-    fetching: false
+    fetching: false,
+    likeStatus: "unclicked"
   };
 
   componentDidMount() {
@@ -24,6 +25,16 @@ export default class QuoteSearcher extends Component {
     });
   }
 
+  handleLike = () => {
+    this.setState({
+      likeStatus: "liked"
+    });
+  };
+  handleDislike = () => {
+    this.setState({
+      likeStatus: "disliked"
+    });
+  };
   render() {
     const { quotes } = this.state;
     const quoteList = quotes.map(quote => (
@@ -31,7 +42,9 @@ export default class QuoteSearcher extends Component {
         key={quote._id}
         quote={quote.quoteText}
         author={quote.quoteAuthor}
-        likedness={this.props.liked}
+        likeStatus={this.state.likeStatus}
+        handleLike={this.handleLike}
+        handleDislike={this.handleDislike}
       />
     ));
 
