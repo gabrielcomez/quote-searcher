@@ -2,7 +2,14 @@ import React, { Component } from "react";
 
 export default class Quote extends Component {
   render() {
-    const { likeStatus } = this.props;
+    const {
+      likeStatus,
+      quote,
+      author,
+      handleLike,
+      handleDislike,
+      id
+    } = this.props;
     // console.log(this.props.likeStatus);
     let quoteStyle = { color: "black" };
     if (likeStatus === "liked") {
@@ -15,12 +22,12 @@ export default class Quote extends Component {
     return (
       <main>
         <div>
-          <p style={quoteStyle}>{this.props.quote}</p>
-          <p>By: {this.props.author}</p>
+          <p style={quoteStyle}>{quote}</p>
+          <p>By: {author}</p>
         </div>
         <div>
-          <button onClick={this.props.handleLike}>:)</button>
-          <button onClick={this.props.handleDislike}>:(</button>
+          <button onClick={() => handleLike(id)}>:)</button>
+          <button onClick={() => handleDislike(id)}>:(</button>
         </div>
       </main>
     );
