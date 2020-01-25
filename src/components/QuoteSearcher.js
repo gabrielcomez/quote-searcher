@@ -31,6 +31,7 @@ export default class QuoteSearcher extends Component {
         key={quote._id}
         quote={quote.quoteText}
         author={quote.quoteAuthor}
+        likedness={this.props.liked}
       />
     ));
 

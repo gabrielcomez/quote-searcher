@@ -2,37 +2,40 @@ import React, { Component } from "react";
 
 export default class Quote extends Component {
   state = {
-    liked: false
+    likeStatus: "unclicked"
   };
 
-  switchLikeTrue = () => {
+  handleLike = () => {
     this.setState({
-      liked: true
+      likeStatus: "liked"
     });
   };
-  switchLikeFalse = () => {
+  handleDislike = () => {
     this.setState({
-      liked: false
+      likeStatus: "disliked"
     });
   };
 
   render() {
-    const { liked } = this.state;
-    console.log(liked);
-    const textWeight = liked && "bold";
-    const textColor = liked && "green";
-    // const textColor = !liked && "red";
+    const { likeStatus } = this.state;
+    console.log(likeStatus);
+    let quoteStyle = { color: "black" };
+    if (likeStatus === "liked") {
+      quoteStyle = { color: "green" };
+    } else if (likeStatus === "disliked") {
+      quoteStyle = { color: "red" };
+    }
+    // console.log(quoteStyle);
+
     return (
       <main>
         <div>
-          <p style={{ fontWeight: textWeight, color: textColor }}>
-            {this.props.quote}
-          </p>
+          <p style={quoteStyle}>{this.props.quote}</p>
           <p>By: {this.props.author}</p>
         </div>
         <div>
-          <button onClick={this.switchLikeTrue}>:)</button>
-          <button onClick={this.switchLikeFalse}>:(</button>
+          <button onClick={this.handleLike}>:)</button>
+          <button onClick={this.handleDislike}>:(</button>
         </div>
       </main>
     );
