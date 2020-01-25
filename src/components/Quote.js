@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 export default class Quote extends Component {
   state = {
-    liked: null
+    liked: false
   };
 
   switchLikeTrue = () => {
@@ -15,21 +15,13 @@ export default class Quote extends Component {
       liked: false
     });
   };
-  // switchQuoteColor = () => {
-  //   if (this.state.liked === true) {
-  //     return "green";
-  //   } else if (this.state.liked === false) {
-  //     return "red";
-  //   } else {
-  //     return "black";
-  //   }
-  // };
 
   render() {
     const { liked } = this.state;
     console.log(liked);
     const textWeight = liked && "bold";
-    const textColor = liked ? "green" : "red";
+    const textColor = liked && "green";
+    // const textColor = !liked && "red";
     return (
       <main>
         <div>
