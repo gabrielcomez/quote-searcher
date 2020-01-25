@@ -3,7 +3,8 @@ import Quote from "./Quote";
 
 export default class QuoteSearcher extends Component {
   state = {
-    quotes: []
+    quotes: [],
+    fetching: false
   };
 
   componentDidMount() {
@@ -18,7 +19,8 @@ export default class QuoteSearcher extends Component {
 
   updateQuotes(treeQuotes) {
     this.setState({
-      quotes: treeQuotes
+      quotes: treeQuotes,
+      fetching: true
     });
   }
 
@@ -31,6 +33,11 @@ export default class QuoteSearcher extends Component {
         author={quote.quoteAuthor}
       />
     ));
-    return <div>{quoteList}</div>;
+
+    if (this.state.fetching) {
+      return <div>{quoteList}</div>;
+    } else {
+      return <div>Loading...</div>;
+    }
   }
 }
