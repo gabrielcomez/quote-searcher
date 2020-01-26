@@ -4,8 +4,7 @@ import Quote from "./Quote";
 export default class QuoteSearcher extends Component {
   state = {
     quotes: [],
-    fetching: false,
-    likeStatus: "unclicked"
+    fetching: false
   };
 
   componentDidMount() {
@@ -18,38 +17,64 @@ export default class QuoteSearcher extends Component {
       .catch(console.error);
   }
 
-  updateQuotes(treeQuotes) {
+  updateQuotes(updatedQuotes) {
     this.setState({
-      quotes: treeQuotes,
+      quotes: updatedQuotes.map(quote => {
+        return { ...quote, likedStatus: "unclicked" };
+      }),
       fetching: true
     });
   }
 
-  handleLike = () => {
-    this.setState({
-      likeStatus: "liked"
-    });
+  setLiked = id => {
+    console.log("Liked!", id);
+    const quotes = this.state.quotes;
+    const quote = quotes.find(quote => quote._id === id);
+    quote.likeStatus = "liked";
+    this.setState({ quotes });
   };
-  handleDislike = () => {
-    this.setState({
-      likeStatus: "disliked"
-    });
+
+  setDisliked = id => {
+    console.log("Disliked!", id);
+    const quotes = this.state.quotes;
+    const quote = quotes.find(quote => quote._id === id);
+    quote.likeStatus = "disliked";
+    this.setState({ quotes });
   };
+
   render() {
     const { quotes } = this.state;
     const quoteList = quotes.map(quote => (
       <Quote
+        id={quote._id}
         key={quote._id}
         quote={quote.quoteText}
         author={quote.quoteAuthor}
-        likeStatus={this.state.likeStatus}
-        handleLike={this.handleLike}
-        handleDislike={this.handleDislike}
+        likeStatus={quote.likeStatus}
+        handleLike={this.setLiked}
+        handleDislike={this.setDisliked}
       />
     ));
 
+    const likedQuotes = quotes.filter(quote => {
+      return quote.likeStatus === "liked";
+    });
+    const likesNum = likedQuotes.length;
+
+    const dislikedQuotes = quotes.filter(quote => {
+      return quote.likeStatus === "disliked";
+    });
+    const dislikesNum = dislikedQuotes.length;
+
     if (this.state.fetching) {
-      return <div>{quoteList}</div>;
+      return (
+        <div>
+          <h2>
+            Liked:{likesNum}/Disliked:{dislikesNum}
+          </h2>
+          {quoteList}
+        </div>
+      );
     } else {
       return <div>Loading...</div>;
     }
